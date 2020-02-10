@@ -70,7 +70,7 @@ public class FirstSample {
 object.method(parameters)
 ~~~
 
-[源代码](java-01\src\main\java\com\baidu\FirstSample.java)
+[源代码](https://github.com/liumingjunhevttc/javaSE/blob/master/java-01/src/main/java/com/baidu/FirstSample.java)
 
 ### 1.5 注释
 
@@ -105,7 +105,7 @@ System.out.println("hello world");
 System.out.println("hello world");
 ~~~~
 
-[源代码](java-01\src\main\java\com\baidu\SecondSample.java)
+[源代码](https://github.com/liumingjunhevttc/javaSE/blob/master/java-01/src/main/java/com/baidu/SecondSample.java)
 
 ### 1.6 数据类型
 
