@@ -427,3 +427,211 @@ System.out.println("^"+(5^2));
 
 [源码](https://github.com/liumingjunhevttc/javaSE/blob/d391ee41bbefc7aefe8a4409b797c57d58cb7d16/java-01/src/main/java/com/baidu/one/FirstSample.java)
 
+### 2.0 字符串
+
+​	从概念上讲，java字符串就是Unicode字符序列，例如，串“java\u2122”由5个Unicode字符组成。java没有内置的字符串类型，而是在标准java类库中提供了一个预定义类，该类是String。每个用双引号括起来的字符串就是String类的一个实例:
+
+~~~~ java
+String s= ""; // 是一个空字符串
+String greeting = "hello";
+~~~~
+
+**扩展**
+
+字符串的底层就是char类型的数组
+
+#### 2.0.1 子串
+
+​    String类中的substring方法可以从一个较大的字符串提取出一个子串。例如:
+
+~~~ java
+String greeting = "hello";
+// 只定义开始
+String childGreeting = greeting.substring(2);
+System.out.println(childGreeting);
+//给开始和结束定义了区间
+childGreeting = greeting.substring(1, 3);
+System.out.println(childGreeting);
+~~~
+
+​	substring的第二个参数即使表达的是末尾的位置，但是字符串截取的时候不包含末尾，即左闭右开区间。
+
+#### 2.0.2 拼接
+
+​	java语言可以使用“+”进行拼接，如下所示:
+
+~~~ java
+String welcome = "欢迎";
+String student = "小王";
+String showData = welcome+" "+student;
+System.out.println(showData);
+~~~
+
+​	值得注意的就是，字符串使用”+“与非字符串进行拼接的时候，结果还是字符串。
+
+#### 2.0.3 不可变字符串
+
+​	String类没有提供用于修改字符串的方法。如果希望将某个字符串修改成对应的字符串，只能使用截取，不可改变字符串本身，在java官方文档中将String类定义的字符串重新定义为不可变字符串。
+
+​    这样做是否降低运行效率，这类问题也对也不对，创建新的字符串的确由于开辟内存空间会影响效率的问题，但是不可变字符串有一个优点:编译器可以让字符串共享。可以想象各种字符串存放在公共的存储池中。字符串变量指向存储池中相应的位置。如果复制一个字符串变量，原始的字符串与复制的字符串共享相同的字符。
+
+​     字符串由于拼接产生的低效率问题会有专门的用来存储字符串的类库，那就是StringBuffer，StringBuilder。
+
+#### 2.0.4 检测字符串是否相等
+
+​	可以使用equals方法来检测字符串是否相等。如下:
+
+~~~~ java
+System.out.println("hello".equals("student"));
+System.out.println("student".equals("student"));
+~~~~
+
+​	如果比较字符串相等时候不想区分大小写，可以使用equalsIgnoreCase()方法， 如下所示:
+
+~~~~ java
+System.out.println("ABC".equalsIgnoreCase("abC"));
+~~~~
+
+注意:一定不要使用==运算符来比较字符串是否相等！这个运算符只能确定两个字符串是否放到同一个位置上。当然，如果字符串放在同一个位置上，它必然相等。但是，完全有可能将内容相同的字符串拷贝到不同的位置上。
+
+实际上只有字符串字面量共享的，而+或者substring产生的操作的结果并不是共享的。因此，千万不要使用==来判断字符串是否相等。
+
+#### 2.0.5 空串与null串
+
+空串”“是长度为0的字符串，可以使用”“来表示
+
+~~~ java
+ System.out.println("".equals("liumingjun"));
+~~~
+
+空串是一个java对象，有自己的串长度(0)和内容(空)，不过，String变量还可以存放一个特殊的值，名为null，这表示目前没有任何对象与该变量相关联，要检查一个字符串是否是null，可以看如下图所示:
+
+~~~~ java
+String str = null;
+System.out.println(str == null);
+~~~~
+
+注意:如果在本来是null的字符串调用本身的方法时，会报NullException异常。
+
+#### 2.0.6 码点与码元
+
+java字符串由char值序列组成，char值本身采用UTF-16编码表示Unicode码点的代码单元。大多数采用常用的Unicode字符使用一个代码单元就可以表示，而辅助字符需要一对代码单元表示。
+
+length方法将返回采用UTF-16编码返回指定字符串所需要的代码单元数量，例如:
+
+~~~~ java
+String str = "hello";
+System.out.println(str.length()); // 5
+~~~~
+
+如果想要实际长度，即码点数量，可以使用以下方式调用：
+
+~~~~ java
+System.out.println(str.codePointCount(0,str.length()));
+~~~~
+
+调用charAt(n)返回位置n的代码单元，n是介于0-length()-1之间。例如:
+
+~~~ java
+System.out.println(str.charAt(2));
+~~~
+
+如果想要得到第i个码点，可以使用如下方式进行获取:
+
+~~~ java
+System.out.println(str.codePointAt(str.offsetByCodePoints(0,2)));
+~~~
+
+**2.0.1 --- 2.0.6 [源码](https://github.com/liumingjunhevttc/javaSE/blob/ec4bf175b353bc2fe90070eba62b49aabd045583/java-01/src/main/java/com/baidu/stringdemo/Demo1.java)**
+
+#### 2.0.7 API
+
+public char charAt(int index) ;
+
+返回指定位置的代码单元。
+
+public int codePointAt(int index) ;
+
+返回指定位置的码点
+
+public int offsetByCodePoints(int index, int codePointOffset) ;
+
+返回从index开始，位移codePointOffset后的码点索引
+
+public int compareTo(String anotherString) ;
+
+按照字典顺序，如果字符串位于anotherString之前，返回一个负数，如果字符串位于anotherString之后，返回一个正数，如果两个字符串相等，返回0。值的注意就是，返回非0的结果是两个字符串其中一个字符不相等时的码元差值。
+
+public default IntStream codePoints()
+
+将这个字符串的码点作为一个流返回。调用toArray方法将它们放在一个数组中。
+
+public boolean equals(Object anObject) ;
+
+判断两个字符串是否相等，如果相等返回true，否则返回false。
+
+public boolean equalsIgnoreCase(String anotherString);
+
+忽略大小写判断两个字符串是否相等。
+
+public boolean startsWith(String prefix);
+
+判断是否以某个字符串开头
+
+public boolean endsWith(String suffix);
+
+判断是否以某个字符串结尾
+
+public int indexOf(String str) ;
+
+查找子串在主串的位置
+
+public int indexOf(String str, int fromIndex);
+
+查找从fromIndex+1开始查找str字符串
+
+public int length() ;
+
+获取字符串的长度
+
+public String replace(char oldChar, char newChar);
+
+替换某个字符
+
+public String substring(int beginIndex) ;
+
+public String substring(int beginIndex, int endIndex);
+
+从某个位置开始截取，第二个substring代表截取到相应位置减一
+
+public String toUpperCase();
+
+小写转大写
+
+public String toLowerCase();
+
+大写转小写
+
+public String trim();
+
+返回一个去掉头部和尾部空格的新字符串
+
+public static String join(CharSequence delimiter, CharSequence... elements);
+
+用某个分割符连接字符串元素，形成新的字符串
+
+[源码](https://github.com/liumingjunhevttc/javaSE/blob/957d1792a67826ad3e7ad2d0ca67d009e44e2c8b/java-01/src/main/java/com/baidu/stringdemo/Demo2.java)
+
+#### 2.0.8 构建字符串
+
+有些时候，需要由较短的字符串构建字符串， 但是采用字符串连接的方式效率比较低，即每次连接字符串，都会构建一个新的String对象，既耗时，又耗费时间。所以需要使用一个替代方案，即使用StringBuffer或者StringBuilder
+
+有一点需要注意的就是StringBuffer与StringBuilder里面所有的方法几乎是一模一样的，但是StringBuilder比StringBuffer效率比较高，因为StringBuffer加了锁机制，如果添加某个字符串时候，使用append()方法即可。
+
+~~~~ java
+StringBuilder stringBuilder = new StringBuilder();
+stringBuilder.append("hello");
+stringBuilder.append("world");
+System.out.println(stringBuilder.toString());
+~~~~
+
