@@ -18,5 +18,10 @@ public class CyCleDemo {
             System.out.println(flag1);
             flag1++;
         }while (flag1<0);
+
+        // for循环
+        for(int i = 0;i<100;i++){
+            System.out.println("for"+i);
+        }
     }
 }
