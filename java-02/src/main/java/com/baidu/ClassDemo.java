@@ -44,5 +44,6 @@ public class ClassDemo {
         classDemo1.setAge(24);
         classDemo1.setName("张三");
         classDemo1.setId(2);
+
     }
 }
