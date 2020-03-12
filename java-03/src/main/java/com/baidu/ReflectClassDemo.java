@@ -20,8 +20,16 @@ public class ReflectClassDemo {
 }
 
 class Student {
-    private Integer id;
+    public Integer id;
     private String name;
+
+    private Student() {
+    }
+
+    public Student(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
