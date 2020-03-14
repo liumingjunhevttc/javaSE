@@ -1,6 +1,6 @@
 package com.baidu;
 
-public class Person implements Comparable {
+public class Person implements Comparable,Cloneable {
     private Double salary;
 
     public Person(Double salary) {
